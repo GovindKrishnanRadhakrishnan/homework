@@ -7,8 +7,8 @@ import Home from "./pages/Home";
 
 import Admin from "./pages/Admin";
 import Work from "./pages/Work";
-import ViewCustomers from "./pages/ViewCustomers";
-import ViewFeedback from "./pages/ViewFeedback";
+import ViewCustomers from "./pages/viewcustomers";
+import ViewFeedback from "./pages/viewfeedback";
 
 /* ================= AUTH GUARDS ================= */
 
