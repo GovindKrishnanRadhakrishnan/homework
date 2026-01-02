@@ -8,12 +8,12 @@ import path from "path";
 
 const __dirname = path.resolve();
 
-const uploadDir = path.join(__dirname, "uploads/workouts");
+const uploadDir = path.join(__dirname, "uploads");
 
-// create folders if they don't exist (Render needs this)
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 dotenv.config();
 
