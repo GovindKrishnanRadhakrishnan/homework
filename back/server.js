@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 
@@ -21,7 +22,12 @@ app.use(
 );
 
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+const __dirname = path.resolve();
+
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
 
 // =========================
 // MONGO CONNECTION
