@@ -2,7 +2,18 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+import fs from "fs";
 import path from "path";
+
+const __dirname = path.resolve();
+
+const uploadDir = path.join(__dirname, "uploads/workouts");
+
+// create folders if they don't exist (Render needs this)
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 dotenv.config();
 
@@ -22,7 +33,6 @@ app.use(
 );
 
 app.use(express.json());
-const __dirname = path.resolve();
 
 app.use(
   "/uploads",
