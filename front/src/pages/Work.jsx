@@ -237,16 +237,32 @@ export default function Work() {
                       <input style={input} value={editForm.category || ""} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} />
 
                       <strong>Existing Images</strong>
-                      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                        {editForm.images?.map((img) => (
-                          <div key={img}>
-                            <img src={`${API_URL}${img}`} alt="" style={{ width: 80, height: 80 }} />
-                            <div>
-                              <input type="checkbox" onChange={() => toggleRemoveImage(img)} /> Remove
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+<div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+  {editForm.images?.map((img) => (
+    <div key={img}>
+      {typeof img === "string" && img.startsWith("/uploads") && (
+        <img
+          src={`${API_URL}${img}`}
+          alt="workout"
+          style={{ width: 80, height: 80 }}
+          onError={(e) => {
+            console.error("IMAGE FAILED TO LOAD:", e.currentTarget.src);
+            e.currentTarget.style.display = "none";
+          }}
+        />
+      )}
+
+      <div>
+        <input
+          type="checkbox"
+          onChange={() => toggleRemoveImage(img)}
+        />{" "}
+        Remove
+      </div>
+    </div>
+  ))}
+</div>
+
 
                       <input type="file" multiple accept="image/*" onChange={handleEditImageAdd} />
 

@@ -141,27 +141,34 @@ export default function Home() {
               }}
             >
               {/* IMAGE */}
-              {Array.isArray(w.images) && w.images.length > 0 && (
-                <img
-                  src={`${API_URL}${w.images[0]}`}
-                  alt={w.title}
-                  loading="lazy"
-                  onClick={() =>
-                    setPreviewImage(`${API_URL}${w.images[0]}`)
-                  }
-                  onError={(e) =>
-                    (e.currentTarget.style.display = "none")
-                  }
-                  style={{
-                    width: 160,
-                    height: 120,
-                    objectFit: "cover",
-                    borderRadius: 8,
-                    flexShrink: 0,
-                    cursor: "pointer",
-                  }}
-                />
-              )}
+{Array.isArray(w.images) &&
+  typeof w.images[0] === "string" &&
+  w.images[0].startsWith("/uploads") && (
+    <img
+      src={`${API_URL}${w.images[0]}`}
+      alt={w.title}
+      loading="lazy"
+      onClick={() =>
+        setPreviewImage(`${API_URL}${w.images[0]}`)
+      }
+      onError={(e) => {
+        console.error(
+          "IMAGE FAILED TO LOAD:",
+          e.currentTarget.src
+        );
+        e.currentTarget.style.display = "none";
+      }}
+      style={{
+        width: 160,
+        height: 120,
+        objectFit: "cover",
+        borderRadius: 8,
+        flexShrink: 0,
+        cursor: "pointer",
+      }}
+    />
+)}
+
 
               {/* CONTENT */}
               <div style={{ flex: 1 }}>
