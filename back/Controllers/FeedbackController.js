@@ -3,12 +3,28 @@ import Feedback from "../Models/Feedback.js";
 // CREATE FEEDBACK
 export const createFeedback = async (req, res) => {
   try {
-    const feedback = await Feedback.create(req.body);
+    // Prefer userId from auth (Android, logged-in web)
+    const userId = req.user?.id || req.body.userId;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required"
+      });
+    }
+
+    const feedback = await Feedback.create({
+      userId,
+      message: req.body.message,
+      rating: req.body.rating ?? 5
+    });
+
     res.status(201).json({ success: true, data: feedback });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 // GET ALL FEEDBACK
 export const getAllFeedback = async (req, res) => {
