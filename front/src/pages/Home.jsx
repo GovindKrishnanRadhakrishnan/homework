@@ -65,23 +65,44 @@ export default function Home() {
     navigate("/login");
   };
 
-  // ================= FEEDBACK =================
-  const submitFeedback = async () => {
-    if (!feedbackText.trim()) return alert("Feedback cannot be empty");
+ // ================= FEEDBACK =================
+const submitFeedback = async () => {
+  if (!feedbackText.trim()) {
+    alert("Feedback cannot be empty");
+    return;
+  }
 
-    try {
-      await axios.post(
-        `${API_URL}/api/feedback`,
-        { message: feedbackText },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert("Feedback submitted");
-      setFeedbackText("");
-      setFeedbackOpen(false);
-    } catch {
-      alert("Feedback failed");
-    }
-  };
+  try {
+    await axios.post(
+      `${API_URL}/api/feedback`,
+      {
+        message: feedbackText,
+        rating: 5, // 🔥 IMPORTANT: send rating explicitly
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    alert("Feedback submitted");
+    setFeedbackText("");
+    setFeedbackOpen(false);
+
+  } catch (err) {
+    console.error(
+      "FEEDBACK ERROR:",
+      err.response?.data || err.message
+    );
+
+    alert(
+      err.response?.data?.message ||
+      "Feedback failed"
+    );
+  }
+};
+
 
   // ================= UI =================
   return (
