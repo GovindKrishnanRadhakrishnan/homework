@@ -1,60 +1,12 @@
 import Feedback from "../Models/Feedback.js";
-import jwt from "jsonwebtoken"
+
 // CREATE FEEDBACK
 export const createFeedback = async (req, res) => {
   try {
-    /* =========================
-       INLINE AUTH (JWT)
-       ========================= */
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        success: false,
-        message: "No token provided"
-      });
-    }
-
-    const token = authHeader.split(" ")[1];
-
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid token"
-      });
-    }
-
-    const userId = decoded.id;
-
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "User ID missing in token"
-      });
-    }
-
-    /* =========================
-       CREATE FEEDBACK
-       ========================= */
-    const feedback = await Feedback.create({
-      userId,
-      message: req.body.message,
-      rating: req.body.rating ?? 5
-    });
-
-    res.status(201).json({
-      success: true,
-      data: feedback
-    });
-
+    const feedback = await Feedback.create(req.body);
+    res.status(201).json({ success: true, data: feedback });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
