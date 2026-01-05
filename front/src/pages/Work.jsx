@@ -240,7 +240,7 @@ export default function Work() {
 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
   {editForm.images?.map((img) => (
     <div key={img}>
-      {typeof img === "string" && img.startsWith("/uploads") && (
+      {typeof img === "string" && img.startsWith("uploads/workouts") && (
         <img
           src={`${API_URL}${img}`}
           alt="workout"

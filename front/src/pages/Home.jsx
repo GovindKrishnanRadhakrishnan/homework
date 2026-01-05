@@ -143,7 +143,7 @@ export default function Home() {
               {/* IMAGE */}
 {Array.isArray(w.images) &&
   typeof w.images[0] === "string" &&
-  w.images[0].startsWith("/uploads") && (
+  w.images[0].startsWith("/uploads/workouts") && (
     <img
       src={`${API_URL}${w.images[0]}`}
       alt={w.title}
