@@ -6,7 +6,6 @@ import {
   updateWorkout,
   deleteWorkout,
 } from "../Controllers/WorkoutController.js";
-import { upload } from "../middleware/Upload.js";
 
 const router = express.Router();
 
