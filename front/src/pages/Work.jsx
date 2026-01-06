@@ -240,17 +240,18 @@ export default function Work() {
 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
   {editForm.images?.map((img) => (
     <div key={img}>
-      {typeof img === "string" && img.startsWith("uploads/workouts") && (
-        <img
-          src={`${API_URL}${img}`}
-          alt="workout"
-          style={{ width: 80, height: 80 }}
-          onError={(e) => {
-            console.error("IMAGE FAILED TO LOAD:", e.currentTarget.src);
-            e.currentTarget.style.display = "none";
-          }}
-        />
-      )}
+     {typeof img === "string" && img.startsWith("/uploads/workouts") && (
+  <img
+    src={`${API_URL}${img}`}
+    alt="workout"
+    style={{ width: 80, height: 80, objectFit: "cover" }}
+    onError={(e) => {
+      console.error("IMAGE FAILED TO LOAD:", e.currentTarget.src);
+      e.currentTarget.style.display = "none";
+    }}
+  />
+)}
+
 
       <div>
         <input
