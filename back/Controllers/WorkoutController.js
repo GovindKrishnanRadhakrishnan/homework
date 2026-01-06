@@ -8,7 +8,7 @@ import fs from "fs";
 ================================ */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, path.join(process.cwd(), "uploads", "workouts"));
   },
   filename: (req, file, cb) => {
     cb(
@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
     );
   },
 });
+
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) cb(null, true);
@@ -120,13 +121,14 @@ export const updateWorkout = (req, res) => {
           : [req.body.removeImages];
       }
 
-      removeImages.forEach((imgPath) => {
-        const filePath = imgPath.replace("/uploads/", "uploads/");
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath);
-        }
-        workout.images = workout.images.filter((img) => img !== imgPath);
-      });
+    removeImages.forEach((imgPath) => {
+  const filePath = path.join(process.cwd(), imgPath);
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+  workout.images = workout.images.filter((img) => img !== imgPath);
+});
+
 
       // ===============================
       // 2️⃣ ADD NEW IMAGES
