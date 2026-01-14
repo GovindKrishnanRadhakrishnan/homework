@@ -3,7 +3,7 @@ import {
   createFeedback,
   getAllFeedback,
   getFeedbackById,
-  deleteFeedback,
+  deleteFeedback,submitFeedback
 } from "../Controllers/FeedbackController.js";
 
 const router = express.Router();
@@ -19,5 +19,8 @@ router.get("/:id", getFeedbackById);
 
 // DELETE FEEDBACK
 router.delete("/:id", deleteFeedback);
+router.post("/", submitFeedback);
+
 
 export default router;
+

@@ -41,3 +41,18 @@ export const deleteFeedback = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+export const submitFeedback = async (req, res) => {
+  console.log("🔥 FEEDBACK HIT");
+  console.log("BODY:", req.body);
+
+  try {
+    const feedback = new Feedback(req.body);
+    await feedback.save();
+
+    console.log("✅ FEEDBACK SAVED");
+    res.status(201).json({ message: "Feedback saved" });
+  } catch (err) {
+    console.error("❌ FEEDBACK ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
