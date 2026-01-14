@@ -9,12 +9,13 @@ const __dirname = path.resolve();
 
 dotenv.config();
 
-const DISK_PATH = "/data";
-const uploadDir = path.join(DISK_PATH, "uploads/workouts");
+const DISK_PATH = path.join(__dirname, "uploads");
+const uploadDir = path.join(DISK_PATH, "workouts");
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 
 import customerRoutes from "./Routes/CustomerRoutes.js";
@@ -23,9 +24,7 @@ import workoutRoutes from "./Routes/WorkoutRoutes.js";
 
 const app = express();
 
-/* =========================
-   CORS (REQUIRED FOR WEB)
-   ========================= */
+
 app.use(
   cors({
     origin: [
@@ -39,12 +38,10 @@ app.use(
 
 app.use(express.json());
 
-/* =========================
-   STATIC IMAGES (FIX ORB)
-   ========================= */
+
 app.use(
   "/uploads/workouts",
-  express.static(path.join("/data", "uploads/workouts"), {
+  express.static(path.join(__dirname, "uploads/workouts"), {
     setHeaders: (res) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
@@ -53,9 +50,7 @@ app.use(
 );
 
 
-/* =========================
-   MONGO CONNECTION
-   ========================= */
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
