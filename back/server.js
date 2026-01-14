@@ -41,13 +41,9 @@ app.use(express.json());
 
 app.use(
   "/uploads/workouts",
-  express.static(path.join(__dirname, "uploads/workouts"), {
-    setHeaders: (res) => {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-    }
-  })
+  express.static(path.join(__dirname, "uploads/workouts"))
 );
+
 
 
 
