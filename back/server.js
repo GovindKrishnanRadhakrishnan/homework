@@ -9,10 +9,13 @@ const __dirname = path.resolve();
 
 dotenv.config();
 
-const uploadDir = path.join(__dirname, "uploads/workouts");
+const DISK_PATH = "/data";
+const uploadDir = path.join(DISK_PATH, "uploads/workouts");
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 import customerRoutes from "./Routes/CustomerRoutes.js";
 import feedbackRoutes from "./Routes/FeedbackRoutes.js";
@@ -41,13 +44,14 @@ app.use(express.json());
    ========================= */
 app.use(
   "/uploads/workouts",
-  express.static(path.join(__dirname, "uploads/workouts"), {
+  express.static(path.join("/data", "uploads/workouts"), {
     setHeaders: (res) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     }
   })
 );
+
 
 /* =========================
    MONGO CONNECTION
